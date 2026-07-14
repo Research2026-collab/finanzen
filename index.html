@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finanzielle Konsolidierung und Zukunftssicherung · KEB Deutschland</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f4f6f9;color:#1a1a1a;font-size:14px}
+:root{--keb:#4A7ABC;--dkl:#1F3864;--hell:#D6E4F4;--hellbg:#EDF3FA;--bd:#e0e4ea;--sf:#fff;--sf1:#f7f9fc;--tsec:#5a6070;--tmut:#9aa0ac;--r:6px}
+.wrap{max-width:980px;margin:0 auto;padding:24px 16px}
+.header{background:var(--dkl);padding:12px 20px;display:flex;align-items:center;gap:16px;border-radius:10px 10px 0 0}
+.header svg{flex-shrink:0;width:180px;height:auto}
+.header-text h1{color:#fff;font-size:15px;font-weight:500;margin:0 0 2px}
+.header-text p{color:#B5D4F4;font-size:11px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px 18px;background:var(--sf1);border-bottom:1px solid var(--bd)}
+.stat{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:10px 12px;text-align:center}
+.stat-n{font-size:20px;font-weight:500;color:var(--dkl)}
+.stat-l{font-size:10px;color:var(--tmut);margin-top:2px}
+.tabs{display:flex;border-bottom:1px solid var(--bd);background:var(--sf1);padding:0 18px;gap:2px;overflow-x:auto}
+.tab{padding:10px 14px;font-size:12px;color:var(--tsec);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;flex-shrink:0;background:none;border-top:none;border-left:none;border-right:none}
+.tab:hover{color:var(--dkl)}
+.tab.active{color:var(--dkl);border-bottom-color:var(--keb);font-weight:500}
+.badge{display:inline-block;margin-left:5px;padding:1px 6px;border-radius:8px;font-size:10px;font-weight:500;background:var(--hell);color:var(--dkl)}
+.tab-desc{padding:8px 18px;background:var(--hellbg);border-bottom:1px solid #C5D8EC;font-size:11px;color:var(--dkl);line-height:1.6}
+.toolbar{display:flex;justify-content:flex-end;padding:10px 18px;background:var(--sf1);border-bottom:1px solid var(--bd)}
+.btn-add{display:flex;align-items:center;gap:6px;padding:7px 15px;font-size:12px;border:none;border-radius:var(--r);background:var(--keb);color:#fff;cursor:pointer;font-weight:500}
+.btn-add:hover{background:var(--dkl)}
+.liste{padding:14px 18px;background:#f4f6f9;border-radius:0 0 10px 10px;min-height:180px}
+.empty{text-align:center;padding:3rem 1rem;color:var(--tmut);font-size:13px}
+.loading{text-align:center;padding:2rem;color:var(--tsec);font-size:13px}
+.karte{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:13px 15px;margin-bottom:10px}
+.karte-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:7px}
+.karte-titel{font-size:14px;font-weight:500;color:#1a1a1a;margin:0}
+.meta{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+.pill{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:500}
+.pi{background:#EDF3FA;color:#1F3864}.pd{background:#D6E4F4;color:#1F3864}.pb{background:#FAEEDA;color:#854F0B}.pok{background:#EAF3DE;color:#3B6D11}
+.rn{background:#EAF3DE;color:#3B6D11}.rm{background:#FAEEDA;color:#854F0B}.rh{background:#FCEBEB;color:#A32D2D}
+.pw{background:var(--sf1);color:var(--tsec);border:1px solid var(--bd)}
+.beschr{font-size:12px;color:var(--tsec);line-height:1.6;margin-bottom:9px;word-break:break-word}
+.karte-footer{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--tmut)}
+.votes{display:flex;gap:5px;align-items:center}
+.vbtn{padding:2px 8px;font-size:11px;border:1px solid var(--bd);border-radius:var(--r);background:transparent;cursor:pointer;color:var(--tsec)}
+.vbtn:hover{background:var(--sf1)}
+.ssel{font-size:11px;padding:3px 6px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf1);color:#1a1a1a;cursor:pointer}
+.kmtog{font-size:11px;color:var(--keb);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.kms{margin-top:9px;border-top:1px solid var(--bd);padding-top:9px}
+.km-item{font-size:12px;color:var(--tsec);padding:4px 0;border-bottom:1px solid var(--bd)}
+.km-row{display:flex;gap:7px;margin-top:7px}
+.km-row input{flex:1;font-size:12px;padding:5px 8px;border:1px solid var(--bd);border-radius:var(--r)}
+.btn-sm{padding:5px 10px;font-size:11px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf1);cursor:pointer;color:#1a1a1a}
+.btn-sm:hover{background:var(--hell)}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--dkl);color:#fff;padding:10px 18px;border-radius:var(--r);font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:200}
+.toast.show{opacity:1}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:100;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--sf);border-radius:12px;border:1px solid var(--bd);padding:22px;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.modal h2{font-size:15px;font-weight:500;margin:0 0 16px;color:#1a1a1a}
+.field{margin-bottom:11px}
+.field label{display:block;font-size:11px;color:var(--tsec);margin-bottom:3px;font-weight:500}
+.field input,.field textarea,.field select{width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:var(--r);font-size:13px;font-family:inherit;background:var(--sf)}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--keb);border-color:var(--keb)}
+.field textarea{resize:vertical;min-height:68px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+.mbtn{padding:7px 18px;font-size:13px;background:var(--keb);color:#fff;border:none;border-radius:var(--r);cursor:pointer;font-weight:500}
+.mbtn:hover{background:var(--dkl)}
+.mbtn:disabled{opacity:.5;cursor:not-allowed}
+.mcnc{padding:7px 13px;font-size:13px;border:1px solid var(--bd);border-radius:var(--r);background:transparent;color:var(--tsec);cursor:pointer}
+.mcnc:hover{background:var(--sf1)}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <svg viewBox="0 0 804 178" xmlns="http://www.w3.org/2000/svg" aria-label="KEB Deutschland">
+    <polygon points="169.6026 116.0508 124.9302 107.9554 173.2286 107.9554 173.2286 90.6326 86.6143 90.6326 86.6143 177.2469 103.9372 177.2469 103.9372 128.9492 112.0326 173.6209 119.3991 172.2858 112.3099 133.1656 130.024 168.7358 136.7258 165.3982 117.5194 126.8316 147.7474 157.0599 153.0414 151.7659 122.8135 121.5379 161.3801 140.7441 164.7173 134.0423 129.1474 116.3283 168.2674 123.4176 169.6026 116.0508" fill="#4A79BC"/>
+    <polygon points="3.626 65.2143 48.2983 73.3097 0 73.3097 0 90.6326 86.6143 90.6326 86.6143 4.0183 69.2914 4.0183 69.2914 52.3159 61.196 7.6442 53.8295 8.9793 60.9186 48.0995 43.2046 12.5293 36.5028 15.8669 55.7092 54.4335 25.4812 24.2052 20.1872 29.4992 50.4151 59.7272 11.8485 40.521 8.5113 47.2228 44.0812 64.9369 4.9612 57.8475 3.626 65.2143" fill="#4A79BC"/>
+    <path d="m233.5469,34.3938v12.9285h-8.3511V4.021h8.3511v12.4336l13.5469-12.4336h11.0112l-23.0117,21.0938,23.6304,22.2075h-11.5679l-13.6089-12.9285Z" fill="#fff"/>
+    <path d="m259.645,34.0845v-6.0623c0-8.4128,4.7632-13.7947,13.0527-13.7947,3.2163,0,5.7529.8042,7.7324,2.2888v-1.7319h7.7319v32.5378h-7.7319v-1.7319c-1.9795,1.4844-4.5161,2.2886-7.7324,2.2886-8.2896,0-13.0527-5.3816-13.0527-13.7944Zm14.2896,6.3713c4.2686,0,6.4956-1.8557,6.4956-6.3713v-6.0623c0-3.8972-2.2271-6.3716-6.4956-6.3716s-6.5571,2.4744-6.5571,6.3716v6.0623c0,4.5156,2.2891,6.3713,6.5571,6.3713Z" fill="#fff"/>
+    <path d="m297.5464,37.8579v-16.269h-4.7632v-6.8044h4.7632v-6.124h7.7324v6.124h7.7939v6.8044h-7.7939v18.3103h7.7939v7.4231h-5.7529c-5.6289,0-9.7734-3.5879-9.7734-9.4644Z" fill="#fff"/>
+    <path d="m318.6519,1.5464h7.7324v14.9082c1.3608-1.0518,3.6499-2.2271,7.6089-2.2271,6.9902,0,12.3716,4.2065,12.3716,11.4441v21.6506h-7.7324v-20.0425c0-2.8455-1.7319-5.6292-6.3711-5.6292-3.5879,0-5.877,2.3508-5.877,5.6292v20.0425h-7.7324V1.5464Z" fill="#fff"/>
+    <path d="m366.3521,14.2275c8.2891,0,14.2275,5.3818,14.2275,13.7947v6.0623c0,8.4128-5.9385,13.7944-14.2275,13.7944s-14.2891-5.3816-14.2891-13.7944v-6.0623c0-8.4128,6-13.7947,14.2891-13.7947Zm0,26.2283c4.2686,0,6.4951-1.8557,6.4951-6.3713v-6.0623c0-3.8972-2.2266-6.3716-6.4951-6.3716s-6.5571,2.4744-6.5571,6.3716v6.0623c0,4.5156,2.2891,6.3713,6.5571,6.3713Z" fill="#fff"/>
+    <path d="m386.5605,37.8579V1.5464h7.7324v38.3528h5.8149v7.4231h-3.7734c-5.6294,0-9.7739-3.5879-9.7739-9.4644Z" fill="#fff"/>
+    <path d="m404.2896,0h7.7939v8.5366h-7.7939V0Zm.0615,14.7844h7.7324v32.5378h-7.7324V14.7844Z" fill="#fff"/>
+    <path d="m417.0073,36.3113h7.7324c.0615,2.1033,1.6699,4.2683,6.062,4.2683,4.1445,0,5.8765-1.5464,5.8765-2.9692,0-1.2371-.6187-2.3506-3.1548-2.7217l-6.4331-.8662c-4.8252-.6184-8.7842-3.7734-8.7842-9.5881,0-5.5054,5.0723-10.2068,12.8667-10.2068,7.918,0,12.9902,4.8252,12.9902,10.8254h-7.7319c-.062-2.165-2.2891-3.7117-5.2583-3.7117-2.8457,0-4.7632,1.3611-4.7632,2.9075,0,1.2373.8662,2.2888,2.7837,2.5364l6.8047.9277c6.8042.928,8.9077,5.5054,8.9077,9.5264,0,5.4436-5.0107,10.6396-14.104,10.6396-7.6704,0-13.6709-4.0208-13.7944-11.5676Z" fill="#fff"/>
+    <path d="m449.8667,34.3938v-6.6809c0-8.4128,6-13.4854,14.2891-13.4854,8.4746,0,13.7329,4.5776,14.166,12.1863h-7.7944c-.2476-2.9692-2.2886-4.7632-6.3716-4.7632-3.959,0-6.5571,2.3508-6.5571,6.0623v6.6809c0,4.3301,2.5981,6.062,6.5571,6.062,4.2065,0,6.248-1.4226,6.4336-4.825h7.7324c-.4331,7.6707-5.6914,12.248-14.166,12.248-8.2891,0-14.2891-5.0723-14.2891-13.4851Z" fill="#fff"/>
+    <path d="m484.1055,1.5464h7.7324v14.9082c1.3608-1.0518,3.6499-2.2271,7.6089-2.2271,6.9902,0,12.3716,4.2065,12.3716,11.4441v21.6506h-7.7324v-20.0425c0-2.8455-1.7319-5.6292-6.3711-5.6292-3.5879,0-5.877,2.3508-5.877,5.6292v20.0425h-7.7324V1.5464Z" fill="#fff"/>
+    <path d="m517.5161,34.3938v-6.6809c0-8.4128,6-13.4854,14.2891-13.4854s14.2275,5.0725,14.2275,13.4854v6.4951h-20.9702v.5569c0,4.5156,2.7837,6.3096,6.7427,6.3096,3.3403,0,6.0005-1.4226,6.3096-3.8972h7.7944c-.7422,6.7427-6.4331,10.7017-14.104,10.7017-8.2891,0-14.2891-5.0723-14.2891-13.4851Zm20.9702-6.2478v-1.1753c0-3.3406-2.7222-5.7529-6.6812-5.7529s-6.7427,2.103-6.7427,5.7529v1.1753h13.4238Z" fill="#fff"/>
+    <path d="m225.1958,68.9766h29.0737v7.7324h-20.7227v9.4646h18.8052v7.5466h-18.8052v10.8254h20.7227v7.7324h-29.0737v-43.3015Z" fill="#fff"/>
+    <path d="m260.165,79.7402h7.7324v2.2268c.8662-1.0515,2.6602-2.2268,6.8667-2.2268h4.7632v7.4231h-4.7632c-4.4541,0-6.8667,2.4124-6.8667,7.1138v18.001h-7.7324v-32.5378Z" fill="#fff"/>
+    <path d="m335.6821,99.0403v-6.0623c0-8.4128,4.7632-13.7947,13.0527-13.7947,3.2163,0,5.7529.8042,7.7324,2.2888v-1.7319h7.7319v32.5378h-7.7319v-1.7322c-1.9795,1.4849-4.5161,2.2888-7.7324,2.2888-8.2896,0-13.0527-5.3816-13.0527-13.7944Zm14.2896,6.3713c4.2686,0,6.4956-1.8557,6.4956-6.3713v-6.0623c0-3.8972-2.2271-6.3716-6.4956-6.3716s-6.5571,2.4744-6.5571,6.3716v6.0623c0,4.5156,2.2891,6.3713,6.5571,6.3713Z" fill="#fff"/>
+    <path d="m225.1958,133.9326h14.9697c11.5059,0,18.9292,7.3613,18.9292,19.1765v4.9487c0,11.8149-7.4233,19.1763-18.9292,19.1763h-14.9697v-43.3015Zm25.5479,24.1252v-4.9487c0-8.1035-4.7632-11.3203-10.5781-11.3203h-6.6187v27.5891h6.6187c5.8149,0,10.5781-3.2166,10.5781-11.3201Z" fill="#fff"/>
+  </svg>
+  <div class="header-text">
+    <h1>Finanzielle Konsolidierung und Zukunftssicherung</h1>
+    <p>Kollaborative Plattform · Research2026-collab / finanzen · KEB Deutschland</p>
+  </div>
+</div>
+
+<div class="stats" id="stats"></div>
+<div class="tabs" id="tabs"></div>
+<div class="tab-desc" id="desc"></div>
+<div class="toolbar">
+  <button class="btn-add" onclick="openM()"><i class="ti ti-plus"></i> Vorschlag einreichen</button>
+</div>
+<div class="liste" id="liste"></div>
+</div>
+
+<div class="modal-bg" id="modal">
+<div class="modal">
+  <h2>Neuer Vorschlag</h2>
+  <div class="field"><label>Titel</label><input type="text" id="ft" placeholder="Kurzer, prägnanter Titel"/></div>
+  <div class="field"><label>Kategorie</label>
+    <select id="fk">
+      <option value="0">Kurzfristig umsetzbare Einsparungen</option>
+      <option value="1">Strukturelle Einsparungen mit Folgewirkung</option>
+      <option value="2">Kurzfristige Einnahmepotenziale</option>
+      <option value="3">Langfristige neue Einnahmequellen</option>
+    </select>
+  </div>
+  <div class="field"><label>Beschreibung</label><textarea id="fb" placeholder="Was genau wird vorgeschlagen?"></textarea></div>
+  <div class="grid2">
+    <div class="field"><label>Geschätzte Wirkung (€)</label><input type="text" id="fw" placeholder="z. B. 15.000 € / Jahr"/></div>
+    <div class="field"><label>Zeithorizont</label><input type="text" id="fz" placeholder="z. B. Q3 2026"/></div>
+  </div>
+  <div class="grid3">
+    <div class="field"><label>Risikostufe</label><select id="fri"><option>Niedrig</option><option>Mittel</option><option>Hoch</option></select></div>
+    <div class="field"><label>Aufwand</label><select id="fau"><option>Niedrig</option><option>Mittel</option><option>Hoch</option></select></div>
+    <div class="field"><label>Vorgeschlagen von</label><input type="text" id="fv" placeholder="Name oder Kürzel"/></div>
+  </div>
+  <div class="modal-footer">
+    <button class="mcnc" onclick="closeM()">Abbrechen</button>
+    <button class="mbtn" id="submit-btn" onclick="submit()">Einreichen</button>
+  </div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var API = 'https://script.google.com/macros/s/AKfycbybVZQn40z-xemu-aFrtZmA-hKmaJyqx641YFJGq-1Y-Wyy9ie0AgWHMNRx0sVdC7OlYg/exec';
+
+var KATS = [
+  '1_Kurzfristige_Einsparungen',
+  '2_Strukturelle_Einsparungen',
+  '3_Kurzfristige_Einnahmen',
+  '4_Langfristige_Einnahmen'
+];
+var KATLABELS = [
+  'Kurzfristig umsetzbare Einsparungen',
+  'Strukturelle Einsparungen mit Folgewirkung',
+  'Kurzfristige Einnahmepotenziale',
+  'Langfristige neue Einnahmequellen'
+];
+var DESCS = [
+  'Maßnahmen, die kurzfristig und mit überschaubarem Aufwand umgesetzt werden können und unmittelbar zur Kostenreduktion beitragen.',
+  'Einschnitte mit struktureller Wirkung, die tiefgreifende organisationale Veränderungen erfordern und Folgen für Angebote oder Personal haben können.',
+  'Neue Einnahmequellen, die mit geringem Aufwand und in absehbarer Zeit erschlossen werden können.',
+  'Strategische Einnahmepotenziale mit längerem Zeithorizont, die eine konzeptionelle Entwicklung oder Investition erfordern.'
+];
+
+var D = {};
+KATS.forEach(function(k){ D[k] = []; });
+var aktiv = 0;
+var offen = {};
+var sk = {Idee:'pi','In Diskussion':'pd',Bewertet:'pb',Beschlossen:'pok'};
+var rk = {Niedrig:'rn',Mittel:'rm',Hoch:'rh'};
+
+function api(params) {
+  var url = API + '?' + Object.keys(params).map(function(k){
+    return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+  }).join('&');
+  return fetch(url).then(function(r){ return r.json(); });
+}
+
+function apiPost(data) {
+  return fetch(API, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  }).then(function(r){ return r.json(); });
+}
+
+function laden() {
+  var kat = KATS[aktiv];
+  document.getElementById('liste').innerHTML = '<div class="loading"><i class="ti ti-loader" style="font-size:20px"></i> Wird geladen…</div>';
+  api({action:'lesen', kat: kat}).then(function(res) {
+    D[kat] = res.rows || [];
+    render();
+  }).catch(function(){
+    document.getElementById('liste').innerHTML = '<div class="empty">Verbindung zum Sheet konnte nicht hergestellt werden.</div>';
+  });
+}
+
+function rStats() {
+  var all = [];
+  KATS.forEach(function(k){ all = all.concat(D[k]); });
+  var tot = all.length;
+  var id = all.filter(function(d){ return d.status === 'Idee'; }).length;
+  var dis = all.filter(function(d){ return d.status === 'In Diskussion'; }).length;
+  var ok = all.filter(function(d){ return d.status === 'Beschlossen'; }).length;
+  document.getElementById('stats').innerHTML =
+    '<div class="stat"><div class="stat-n">'+tot+'</div><div class="stat-l">Gesamt</div></div>'+
+    '<div class="stat"><div class="stat-n">'+id+'</div><div class="stat-l">Ideen</div></div>'+
+    '<div class="stat"><div class="stat-n">'+dis+'</div><div class="stat-l">In Diskussion</div></div>'+
+    '<div class="stat"><div class="stat-n">'+ok+'</div><div class="stat-l">Beschlossen</div></div>';
+}
+
+function rTabs() {
+  document.getElementById('tabs').innerHTML = KATLABELS.map(function(k,i){
+    var n = D[KATS[i]].length;
+    return '<button class="tab'+(i===aktiv?' active':'')+'" onclick="wechsel('+i+')">'+k+(n?'<span class="badge">'+n+'</span>':'')+'</button>';
+  }).join('');
+  document.getElementById('desc').textContent = DESCS[aktiv];
+}
+
+function rListe() {
+  var gef = D[KATS[aktiv]];
+  if (!gef.length) {
+    document.getElementById('liste').innerHTML = '<div class="empty"><i class="ti ti-inbox" style="font-size:28px;display:block;margin-bottom:8px;opacity:.4"></i>Noch keine Vorschläge in dieser Kategorie</div>';
+    return;
+  }
+  document.getElementById('liste').innerHTML = gef.map(function(d){
+    var km = offen[d.id] ? '<div class="kms">'+
+      (d.kommentare && d.kommentare.length && d.kommentare[0] !== ''
+        ? d.kommentare.map(function(c){ return '<div class="km-item">'+c+'</div>'; }).join('')
+        : '<div style="font-size:11px;color:#9aa0ac;margin-bottom:6px">Noch keine Kommentare</div>')+
+      '<div class="km-row"><input type="text" id="ki'+d.id+'" placeholder="Kommentar hinzufügen…"/><button class="btn-sm" onclick="addKm(\''+d.id+'\')">Senden</button></div></div>' : '';
+    return '<div class="karte">'+
+      '<div class="karte-top"><p class="karte-titel">'+d.titel+'</p>'+
+      '<select class="ssel" onchange="setS(\''+d.id+'\',this.value)">'+
+      ['Idee','In Diskussion','Bewertet','Beschlossen'].map(function(s){
+        return '<option'+(d.status===s?' selected':'')+'>'+s+'</option>';
+      }).join('')+'</select></div>'+
+      '<div class="meta">'+
+      '<span class="pill '+(sk[d.status]||'pi')+'">'+d.status+'</span>'+
+      '<span class="pill '+(rk[d.risiko]||'rn')+'">Risiko: '+d.risiko+'</span>'+
+      '<span class="pill '+(rk[d.aufwand]||'rn')+'">Aufwand: '+d.aufwand+'</span>'+
+      (d.wirkung?'<span class="pill pw">'+d.wirkung+'</span>':'')+
+      (d.zeit?'<span class="pill pw">'+d.zeit+'</span>':'')+
+      '</div>'+
+      '<p class="beschr">'+d.beschr+'</p>'+
+      '<div class="karte-footer"><span>Von <strong>'+d.von+'</strong> · '+d.datum+'</span>'+
+      '<div class="votes">'+
+      '<span class="kmtog" onclick="togKm(\''+d.id+'\')"><i class="ti ti-message" style="font-size:13px;vertical-align:-2px"></i> '+(d.kommentare?d.kommentare.filter(function(x){return x!=='';}).length:0)+'</span>&nbsp;&nbsp;'+
+      '<button class="vbtn" onclick="vote(\''+d.id+'\',\'pro\')"><i class="ti ti-thumb-up"></i> '+d.pro+'</button>'+
+      '<button class="vbtn" onclick="vote(\''+d.id+'\',\'contra\')"><i class="ti ti-thumb-down"></i> '+d.contra+'</button>'+
+      '</div></div>'+km+'</div>';
+  }).join('');
+}
+
+function render() { rStats(); rTabs(); rListe(); }
+
+function wechsel(i) { aktiv = i; laden(); }
+
+function openM() { document.getElementById('modal').classList.add('open'); }
+function closeM() { document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeM(); });
+
+function submit() {
+  var t = document.getElementById('ft').value.trim();
+  if (!t) return;
+  var btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Wird gespeichert…';
+  apiPost({
+    action: 'schreiben',
+    kat: KATS[parseInt(document.getElementById('fk').value)],
+    titel: t,
+    beschr: document.getElementById('fb').value.trim(),
+    wirkung: document.getElementById('fw').value.trim(),
+    zeit: document.getElementById('fz').value.trim(),
+    risiko: document.getElementById('fri').value,
+    aufwand: document.getElementById('fau').value,
+    von: document.getElementById('fv').value.trim() || 'Anonym'
+  }).then(function(){
+    aktiv = parseInt(document.getElementById('fk').value);
+    ['ft','fb','fw','fz','fv'].forEach(function(id){ document.getElementById(id).value=''; });
+    btn.disabled = false;
+    btn.textContent = 'Einreichen';
+    closeM();
+    toast('Vorschlag gespeichert');
+    laden();
+  }).catch(function(){
+    btn.disabled = false;
+    btn.textContent = 'Einreichen';
+    toast('Fehler beim Speichern');
+  });
+}
+
+function setS(id, s) {
+  apiPost({action:'update', kat:KATS[aktiv], id:id, field:'status', value:s})
+    .then(function(){ laden(); toast('Status aktualisiert'); });
+}
+
+function vote(id, dir) {
+  apiPost({action:'update', kat:KATS[aktiv], id:id, field:dir})
+    .then(function(){ laden(); });
+}
+
+function togKm(id) { offen[id] = !offen[id]; rListe(); }
+
+function addKm(id) {
+  var inp = document.getElementById('ki'+id);
+  if (!inp || !inp.value.trim()) return;
+  var text = inp.value.trim();
+  apiPost({action:'update', kat:KATS[aktiv], id:id, field:'kommentar', value:text})
+    .then(function(){ toast('Kommentar gespeichert'); laden(); });
+}
+
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+laden();
+</script>
+</body>
+</html>
